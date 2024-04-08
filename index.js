@@ -6,11 +6,14 @@ const ftp = require('basic-ftp')
 const { Readable } = require('stream')
 const app = express()
 const fs = require('fs')
+const path = require('path')
 const request = require('request')
 app.use(cors())
 app.use(fileUpload())
 
-app.post('/upload/', async (req, res) => {
+app.use('/', express.static(path.join(__dirname, '/dist')))
+
+app.post('/upload', async (req, res) => {
     try {
         const img = req.files.file
         const client = new ftp.Client()
